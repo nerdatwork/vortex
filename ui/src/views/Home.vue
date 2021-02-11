@@ -401,8 +401,6 @@ export default {
 	}),
 	methods: {
 		async signUp() {
-			this.updatePath();
-
 			this.$store.dispatch('signUp', {
 				email: this.email,
 				password: this.password,
@@ -411,18 +409,12 @@ export default {
 		},
 
 		async login() {
-			this.updatePath();
-
 			this.$store.dispatch('login', {
 				email: this.email,
 				password: this.password
 			});
 		},
 
-		updatePath() {
-			if (this.$route.query.app) this.destination = '/app/apps';
-			else this.destination = '/app/browser';
-		},
 	},
 	computed: {
 		error() {
@@ -444,6 +436,9 @@ export default {
 		MainFooter,
 	},
 	async created() {
+		if (this.$route.query.app) this.destination = '/app/apps';
+		else this.destination = '/app/browser';
+
 		const urlParams = new URLSearchParams(window.location.search);
 
 		const activation = urlParams.get('activation');
